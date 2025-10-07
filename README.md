@@ -1,46 +1,50 @@
-# Getting Started with Create React App
+## Start backend server
+```bash
+dotnet run --project /Users/main/Desktop/test-app/backend/IoTDeviceAPI/IoTDeviceAPI.csproj
+```
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Start frontend
+```bash
+npm install
+npm start
+```
 
-## Available Scripts
+## Testing the API
+```bash
+curl -s http://localhost:5100/api/devices
+```
 
-In the project directory, you can run:
+# Endpoints
+GET /api/devices retrieves all devices or filters using query parameter
+?type=lightbulb or ?type=airconditioner
+`curl http://localhost:5100/api/devices`
 
-### `npm start`
+Only lightbulbs
+curl "http://localhost:5100/api/devices?type=lightbulb"
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Only aircons
+curl "http://localhost:5100/api/devices?type=airconditioner"
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+POST /api/devices/{id}/toggle to toggle device by its ID
+curl -X POST http://localhost:5100/api/devices/1/toggle
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+POST /api/devices/batch-toggle to toggle all devices of a specific type using request body
+`{"deviceType": 0, "state": true}`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Turn all lightbulbs ON
+curl -X POST http://localhost:5100/api/devices/batch-toggle \
+  -H "Content-Type: application/json" \
+  -d '{"deviceType": 0, "state": true}'
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+Turn all air conditioners OFF
+curl -X POST http://localhost:5100/api/devices/batch-toggle \
+  -H "Content-Type: application/json" \
+  -d '{"deviceType": 1, "state": false}'
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+SignalIR Hub: /deviceHub
+Real-time WebSocket connection that broadcasts DeviceStateChanged events to connected clients when state changes
