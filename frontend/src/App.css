@@ -1,0 +1,48 @@
+.App {
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.App-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 2rem;
+}
+
+.connection-status {
+  font-size: 0.9rem;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.connection-status.connected {
+  background-color: #4caf50;
+  color: white;
+}
+
+.connection-status.disconnected {
+  background-color: #f44336;
+  color: white;
+}
+
+.connection-status.connection-failed {
+  background-color: #ff9800;
+  color: white;
+}
+
+.App-main {
+  flex: 1;
+  padding: 20px;
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 140px);
+}
